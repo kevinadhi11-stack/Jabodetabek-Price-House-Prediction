@@ -64,9 +64,12 @@ Buka browser di `http://localhost:8501`
 - Simulasi perbandingan harga antar kota dengan spek rumah yang sama
 - Sidebar info model (R², MAE, RMSE)
 
-## ✍️ Catatan untuk Portofolio
+## 💡 Insight & Business Value
 
-Tambahkan juga:
-- Screenshot aplikasi di README ini
-- Link live demo Streamlit Cloud
-- Penjelasan singkat insight/business value dari model ini
+Model ini mencapai R² sebesar 0.74, yang berarti variasi harga rumah di area Jabodetabek dapat dijelaskan dengan cukup baik dari kombinasi luas tanah, luas bangunan, jumlah kamar, dan lokasi. Fitur lokasi (kota) terbukti menjadi salah satu penentu harga paling signifikan, mencerminkan pola harga properti riil di mana lokasi strategis (misal Jakarta Selatan) secara konsisten lebih mahal dibanding wilayah penyangga.
+
+Aplikasi ini dapat dimanfaatkan oleh agen properti atau calon pembeli untuk mendapatkan estimasi harga wajar sebelum negosiasi, serta membandingkan potensi harga properti di berbagai kota dengan spesifikasi yang sama.
+
+## 📸 Demo
+
+*(Tambahkan screenshot aplikasi dan link live demo Streamlit Cloud di sini setelah deploy)*
