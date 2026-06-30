@@ -1,75 +1,80 @@
-# 🏠 Prediksi Harga Rumah Indonesia
+# 🏠 Indonesia House Price Prediction
 
-Aplikasi web interaktif untuk memprediksi harga rumah di Indonesia (Jabodetabek) menggunakan Machine Learning, dibangun dengan **Streamlit** dan **Gradient Boosting Regressor**.
+An interactive web app for predicting house prices in Indonesia (Jabodetabek area) using Machine Learning, built with **Streamlit** and **Gradient Boosting Regressor**.
 
-## 📁 Struktur Proyek
+## 📁 Project Structure
 
 ```
 house-price-app/
 ├── data/
-│   └── harga_rumah.csv      # taruh dataset CSV kamu di sini
-├── model/                   # otomatis terbuat setelah training
+│   └── harga_rumah.csv      # place your dataset CSV here
+├── model/                   # auto-generated after training
 │   ├── pipeline.pkl
 │   ├── kota_list.pkl
 │   └── metadata.pkl
-├── train_model.py           # script training model
-├── app.py                   # aplikasi Streamlit
+├── train_model.py           # model training script
+├── app.py                   # Streamlit application
 ├── requirements.txt
 └── README.md
 ```
 
-## 🚀 Cara Menjalankan
+## 🚀 Getting Started
 
 ### 1. Install dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2. Siapkan dataset
-Dataset yang dipakai: [Harga Rumah Jabodetabek](https://www.kaggle.com/datasets/nafisbarizki/daftar-harga-rumah-jabodetabek), simpan sebagai `data/harga_rumah.csv`
+### 2. Prepare the dataset
+Dataset used: [Jabodetabek House Price](https://www.kaggle.com/datasets/nafisbarizki/daftar-harga-rumah-jabodetabek), save it as `data/harga_rumah.csv`
 
-**Penting:** Buka `train_model.py`, lalu sesuaikan `COLUMN_MAP` dengan nama kolom dataset kamu (misal `HARGA`, `LT`, `LB`, dll).
+**Important:** Open `train_model.py` and adjust `COLUMN_MAP` to match your dataset's column names if they differ.
 
-### 3. Latih model
+### 3. Train the model
 ```bash
 python train_model.py
 ```
-Ini akan menghasilkan file `model/pipeline.pkl` dan menampilkan metrik evaluasi (MAE, RMSE, R²).
+This generates `model/pipeline.pkl` and prints evaluation metrics (MAE, RMSE, R²).
 
-### 4. Jalankan aplikasi
+### 4. Run the application
 ```bash
 streamlit run app.py
 ```
-Buka browser di `http://localhost:8501`
+Open your browser at `http://localhost:8501`
 
-## 🌐 Deploy Gratis ke Streamlit Cloud
+## 🌐 Free Deployment to Streamlit Cloud
 
-1. Push folder project ini ke GitHub (termasuk folder `model/` yang sudah berisi `.pkl`)
-2. Buka [share.streamlit.io](https://share.streamlit.io)
-3. Login dengan GitHub, pilih repo ini, set main file ke `app.py`
-4. Klik Deploy — link bisa langsung dibagikan ke recruiter!
+1. Push this project folder to GitHub (including the `model/` folder with `.pkl` files)
+2. Go to [share.streamlit.io](https://share.streamlit.io)
+3. Log in with GitHub, select this repo, set the main file to `app.py`
+4. Click Deploy — the link can be shared directly with recruiters!
 
 ## 🛠️ Tech Stack
 
 - **Model:** Gradient Boosting Regressor (scikit-learn)
 - **Preprocessing:** StandardScaler + OneHotEncoder via sklearn Pipeline
-- **Visualisasi:** Plotly (gauge chart, bar chart perbandingan kota)
+- **Visualization:** Plotly (gauge chart, city comparison bar chart)
 - **Frontend:** Streamlit
 
-## 📊 Fitur Aplikasi
+## 📊 App Features
 
-- Input interaktif: kota, luas tanah/bangunan, kamar tidur/mandi, garasi
-- Prediksi harga real-time dengan rentang estimasi
-- Gauge chart menunjukkan posisi harga relatif terhadap median dataset
-- Simulasi perbandingan harga antar kota dengan spek rumah yang sama
-- Sidebar info model (R², MAE, RMSE)
+- Interactive inputs: city, land/building size, bedrooms/bathrooms, garage
+- Real-time price prediction with estimated range
+- Gauge chart showing price position relative to the dataset median
+- City-to-city price comparison simulation with matching house specs
+- Sidebar with model performance summary (R², MAE, RMSE)
 
 ## 💡 Insight & Business Value
 
-Model ini mencapai R² sebesar 0.74, yang berarti variasi harga rumah di area Jabodetabek dapat dijelaskan dengan cukup baik dari kombinasi luas tanah, luas bangunan, jumlah kamar, dan lokasi. Fitur lokasi (kota) terbukti menjadi salah satu penentu harga paling signifikan, mencerminkan pola harga properti riil di mana lokasi strategis (misal Jakarta Selatan) secara konsisten lebih mahal dibanding wilayah penyangga.
+The model achieves an R² of 0.74, meaning a substantial portion of house price variation in the Jabodetabek area can be explained by land size, building size, number of rooms, and location. City/location proved to be one of the strongest price drivers, mirroring real-world property trends where prime locations (e.g. South Jakarta) consistently command higher prices than surrounding suburban areas.
 
-Aplikasi ini dapat dimanfaatkan oleh agen properti atau calon pembeli untuk mendapatkan estimasi harga wajar sebelum negosiasi, serta membandingkan potensi harga properti di berbagai kota dengan spesifikasi yang sama.
+This tool can help property agents or prospective buyers get a fair price estimate before negotiation, and compare potential property prices across different cities given the same specifications.
 
 ## 📸 Demo
 
-*(Tambahkan screenshot aplikasi dan link live demo Streamlit Cloud di sini setelah deploy)*
+*(Add an app screenshot and the live Streamlit Cloud demo link here after deployment)*
+
+## 👤 Author
+
+**Kevinz Adhi Anggoro**
+Data Science Bootcamp Graduate Batch 56 — Digital Skola
