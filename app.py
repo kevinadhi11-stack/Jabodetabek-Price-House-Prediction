@@ -142,7 +142,7 @@ with st.sidebar:
     """)
 
     st.markdown("---")
-    st.caption("Dibuat oleh: **[Kevinz Adhi]**")
+    st.caption("Dibuat oleh: **Kevinz Adhi Anggoro**")
     st.caption("Dataset: Kaggle — Harga Rumah Jabodetabek")
     st.caption("Model: Gradient Boosting | sklearn")
 

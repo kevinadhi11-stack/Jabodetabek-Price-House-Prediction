@@ -26,9 +26,7 @@ pip install -r requirements.txt
 ```
 
 ### 2. Siapkan dataset
-Download salah satu dataset berikut dari Kaggle, lalu simpan sebagai `data/harga_rumah.csv`:
-- [Harga Rumah Jabodetabek](https://www.kaggle.com/datasets/nafisbarizki/daftar-harga-rumah-jabodetabek)
-- [Daftar Harga Rumah Indonesia](https://www.kaggle.com/datasets/wisnuanggara/daftar-harga-rumah)
+Dataset yang dipakai: [Harga Rumah Jabodetabek](https://www.kaggle.com/datasets/nafisbarizki/daftar-harga-rumah-jabodetabek), simpan sebagai `data/harga_rumah.csv`
 
 **Penting:** Buka `train_model.py`, lalu sesuaikan `COLUMN_MAP` dengan nama kolom dataset kamu (misal `HARGA`, `LT`, `LB`, dll).
 
@@ -68,7 +66,7 @@ Buka browser di `http://localhost:8501`
 
 ## ✍️ Catatan untuk Portofolio
 
-Ganti `[Nama Kamu]` di `app.py` (bagian sidebar) dengan nama kamu. Tambahkan juga:
+Tambahkan juga:
 - Screenshot aplikasi di README ini
 - Link live demo Streamlit Cloud
 - Penjelasan singkat insight/business value dari model ini
