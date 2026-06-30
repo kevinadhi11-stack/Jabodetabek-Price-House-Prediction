@@ -7,7 +7,7 @@ An interactive web app for predicting house prices in Indonesia (Jabodetabek are
 ```
 house-price-app/
 ├── data/
-│   └── harga_rumah.csv      # place your dataset CSV here
+│   └── house_prices.csv      # place your dataset CSV here
 ├── model/                   # auto-generated after training
 │   ├── pipeline.pkl
 │   ├── kota_list.pkl

@@ -1,10 +1,10 @@
 """
-app.py — Streamlit App: Prediksi Harga Rumah Indonesia
+app.py — Streamlit App: Indonesia House Price Prediction
 =======================================================
-Jalankan dengan: streamlit run app.py
+Run with: streamlit run app.py
 
-Pastikan sudah menjalankan train_model.py terlebih dahulu
-sehingga folder model/ berisi pipeline.pkl, kota_list.pkl, metadata.pkl.
+Make sure you have run train_model.py first
+so that the model/ folder contains pipeline.pkl, kota_list.pkl, and metadata.pkl.
 """
 
 import streamlit as st
@@ -17,7 +17,7 @@ from pathlib import Path
 
 # ─── CONFIG ───────────────────────────────────────────────────────────────────
 st.set_page_config(
-    page_title="Prediksi Harga Rumah Indonesia",
+    page_title="Indonesia House Price Prediction",
     page_icon="🏠",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -26,7 +26,7 @@ st.set_page_config(
 # ─── LOAD ARTIFACTS ───────────────────────────────────────────────────────────
 @st.cache_resource
 def load_model():
-    """Load model pipeline (di-cache agar tidak reload tiap interaksi)."""
+    """Load model pipeline (cached to avoid reloading on each interaction)."""
     model_dir = Path("model")
     if not model_dir.exists():
         return None, None, None
@@ -44,17 +44,17 @@ def load_model():
 pipeline, kota_list, metadata = load_model()
 
 # ─── HELPER ───────────────────────────────────────────────────────────────────
-def format_rupiah(nilai: float) -> str:
-    if nilai >= 1e9:
-        return f"Rp {nilai/1e9:.2f} Miliar"
-    elif nilai >= 1e6:
-        return f"Rp {nilai/1e6:.1f} Juta"
+def format_rupiah(value: float) -> str:
+    if value >= 1e9:
+        return f"Rp {value/1e9:.2f} Billion"
+    elif value >= 1e6:
+        return f"Rp {value/1e6:.1f} Million"
     else:
-        return f"Rp {nilai:,.0f}"
+        return f"Rp {value:,.0f}"
 
 
 def predict_price(kota, luas_tanah, luas_bangunan, kamar_tidur, kamar_mandi, garasi):
-    """Buat prediksi dari input user."""
+    """Generate prediction from user input."""
     rasio_bangunan = luas_bangunan / (luas_tanah + 1)
     total_kamar    = kamar_tidur + kamar_mandi
 
@@ -74,7 +74,7 @@ def predict_price(kota, luas_tanah, luas_bangunan, kamar_tidur, kamar_mandi, gar
 
 
 def get_price_range(harga_pred: float):
-    """Beri rentang estimasi ±15%."""
+    """Provide an estimated range of ±15%."""
     return harga_pred * 0.85, harga_pred * 1.15
 
 
@@ -111,93 +111,93 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ─── HEADER ───────────────────────────────────────────────────────────────────
-st.title("🏠 Prediksi Harga Rumah Indonesia")
-st.markdown("Estimasi harga properti berdasarkan fitur rumah menggunakan **Gradient Boosting Regressor**.")
+st.title("🏠 Indonesia House Price Prediction")
+st.markdown("Estimate property prices based on housing features using a **Gradient Boosting Regressor** model.")
 
 if pipeline is None:
     st.error(
-        "⚠️ Model belum dilatih. Jalankan dulu: `python train_model.py`\n\n"
-        "Pastikan file dataset ada di `data/harga_rumah.csv`"
+        "⚠️ Model has not been trained yet. Please run: `python train_model.py` first.\n\n"
+        "Ensure the dataset file exists at `data/house_prices.csv`"
     )
     st.stop()
 
 # ─── SIDEBAR: METRIC SUMMARY ──────────────────────────────────────────────────
 with st.sidebar:
-    st.markdown("### 📊 Info Model")
+    st.markdown("### 📊 Model Info")
     st.markdown(f"""
-    | Metrik | Nilai |
+    | Metric | Value |
     |--------|-------|
-    | Data training | {metadata['n_data']:,} rumah |
+    | Training Data | {metadata['n_data']:,} houses |
     | R² Score | {metadata['metrics']['r2']:.3f} |
-    | MAE | Rp {metadata['metrics']['mae']/1e6:.1f} juta |
-    | RMSE | Rp {metadata['metrics']['rmse']/1e6:.1f} juta |
+    | MAE | Rp {metadata['metrics']['mae']/1e6:.1f} M |
+    | RMSE | Rp {metadata['metrics']['rmse']/1e6:.1f} M |
     """)
 
     st.markdown("---")
-    st.markdown("### 📌 Rentang Harga Dataset")
+    st.markdown("### 📌 Dataset Price Range")
     st.markdown(f"""
     - **Min:** {format_rupiah(metadata['harga_min'])}
     - **Median:** {format_rupiah(metadata['harga_median'])}
-    - **Maks:** {format_rupiah(metadata['harga_max'])}
+    - **Max:** {format_rupiah(metadata['harga_max'])}
     """)
 
     st.markdown("---")
-    st.caption("Dibuat oleh: **Kevinz Adhi Anggoro**")
+    st.caption("Developed by: **Kevinz Adhi Anggoro**")
     st.caption("Dataset: Kaggle — Harga Rumah Jabodetabek")
     st.caption("Model: Gradient Boosting | sklearn")
 
 # ─── MAIN: INPUT FORM ─────────────────────────────────────────────────────────
-st.markdown('<p class="section-header">📝 Masukkan Detail Properti</p>', unsafe_allow_html=True)
+st.markdown('<p class="section-header">📝 Enter Property Details</p>', unsafe_allow_html=True)
 
 col1, col2, col3 = st.columns(3)
 
 with col1:
     kota = st.selectbox(
-        "📍 Kota / Wilayah",
+        "📍 City / Region",
         options=kota_list,
         index=0,
-        help="Pilih kota lokasi properti"
+        help="Select the city where the property is located"
     )
     luas_tanah = st.number_input(
-        "📐 Luas Tanah (m²)",
+        "📐 Land Area (sqm)",
         min_value=10, max_value=5000,
         value=120, step=10,
     )
 
 with col2:
     luas_bangunan = st.number_input(
-        "🏗️ Luas Bangunan (m²)",
+        "🏗️ Building Area (sqm)",
         min_value=10, max_value=3000,
         value=90, step=10,
     )
     kamar_tidur = st.slider(
-        "🛏️ Jumlah Kamar Tidur",
+        "🛏️ Number of Bedrooms",
         min_value=1, max_value=15, value=3
     )
 
 with col3:
     kamar_mandi = st.slider(
-        "🚿 Jumlah Kamar Mandi",
+        "🚿 Number of Bathrooms",
         min_value=1, max_value=10, value=2
     )
     garasi = st.slider(
-        "🚗 Kapasitas Garasi",
+        "🚗 Garage Capacity",
         min_value=0, max_value=8, value=1
     )
 
-# Validasi
+# Validation
 if luas_bangunan > luas_tanah:
-    st.warning("⚠️ Luas bangunan lebih besar dari luas tanah. Pastikan data sudah benar.")
+    st.warning("⚠️ Building area is larger than land area. Please ensure the data input is correct.")
 
 st.markdown("---")
 
-# ─── PREDIKSI ─────────────────────────────────────────────────────────────────
+# ─── PREDICTION ─────────────────────────────────────────────────────────────────
 col_btn, _ = st.columns([1, 3])
 with col_btn:
-    predict_btn = st.button("🔮 Prediksi Harga", type="primary", use_container_width=True)
+    predict_btn = st.button("🔮 Predict Price", type="primary", use_container_width=True)
 
 if predict_btn:
-    with st.spinner("Menghitung prediksi..."):
+    with st.spinner("Calculating prediction..."):
         harga_pred = predict_price(
             kota, luas_tanah, luas_bangunan,
             kamar_tidur, kamar_mandi, garasi
@@ -205,40 +205,40 @@ if predict_btn:
         harga_min, harga_max = get_price_range(harga_pred)
 
     st.markdown("---")
-    st.markdown('<p class="section-header">💰 Hasil Prediksi</p>', unsafe_allow_html=True)
+    st.markdown('<p class="section-header">💰 Prediction Result</p>', unsafe_allow_html=True)
 
     res1, res2, res3 = st.columns(3)
 
     with res1:
         st.markdown(f"""
         <div class="metric-card">
-            <div style="font-size:0.85rem; color:#6c757d; margin-bottom:6px">Estimasi Harga</div>
+            <div style="font-size:0.85rem; color:#6c757d; margin-bottom:6px">Estimated Price</div>
             <div class="price-display">{format_rupiah(harga_pred)}</div>
-            <div class="price-range">Rentang: {format_rupiah(harga_min)} – {format_rupiah(harga_max)}</div>
+            <div class="price-range">Range: {format_rupiah(harga_min)} – {format_rupiah(harga_max)}</div>
         </div>
         """, unsafe_allow_html=True)
 
     with res2:
         harga_per_m2 = harga_pred / luas_bangunan
         st.metric(
-            label="Harga per m² Bangunan",
+            label="Price per sqm of Building",
             value=format_rupiah(harga_per_m2),
         )
 
     with res3:
         harga_per_lt = harga_pred / luas_tanah
         st.metric(
-            label="Harga per m² Tanah",
+            label="Price per sqm of Land",
             value=format_rupiah(harga_per_lt),
         )
 
-    # ── Visualisasi: Gauge chart ───────────────────────────────────────────
-    st.markdown("### 📈 Posisi Harga di Dataset")
+    # ── Visualization: Gauge chart ───────────────────────────────────────────
+    st.markdown("### 📈 Price Position within Dataset")
 
     fig_gauge = go.Figure(go.Indicator(
         mode="gauge+number+delta",
         value=harga_pred / 1e6,
-        number={"suffix": " Juta", "valueformat": ".0f"},
+        number={"suffix": " M", "valueformat": ".0f"},
         delta={
             "reference": metadata["harga_median"] / 1e6,
             "relative": True,
@@ -252,7 +252,7 @@ if predict_btn:
                     min(metadata["harga_max"] / 1e6, harga_pred * 3 / 1e6)
                 ],
                 "tickformat": ".0f",
-                "ticksuffix": "Jt",
+                "ticksuffix": "M",
             },
             "bar": {"color": "#1a73e8"},
             "steps": [
@@ -266,63 +266,63 @@ if predict_btn:
                 "value": metadata["harga_median"] / 1e6,
             },
         },
-        title={"text": "Harga Prediksi (Rupiah)"},
+        title={"text": "Predicted Price (Million Rp)"},
     ))
     fig_gauge.update_layout(height=300, margin=dict(t=60, b=20, l=20, r=20))
     st.plotly_chart(fig_gauge, use_container_width=True)
 
     st.caption(
-        f"🔴 Garis merah = median dataset ({format_rupiah(metadata['harga_median'])}). "
-        "Hijau = di bawah median, Kuning = sekitar median, Merah = di atas median."
+        f"🔴 Red line = dataset median ({format_rupiah(metadata['harga_median'])}). "
+        "Green = below median, Yellow = near median, Red = above median."
     )
 
     # ── Detail properti yang diinput ──────────────────────────────────────
-    with st.expander("🔍 Lihat detail properti yang diinput"):
+    with st.expander("🔍 View Inputted Property Details"):
         detail = {
-            "Kota": kota,
-            "Luas Tanah": f"{luas_tanah} m²",
-            "Luas Bangunan": f"{luas_bangunan} m²",
-            "Kamar Tidur": kamar_tidur,
-            "Kamar Mandi": kamar_mandi,
-            "Garasi": garasi,
-            "Rasio Bangunan/Tanah": f"{luas_bangunan/luas_tanah:.2f}",
+            "City": kota,
+            "Land Area": f"{luas_tanah} sqm",
+            "Building Area": f"{luas_bangunan} sqm",
+            "Bedrooms": kamar_tidur,
+            "Bathrooms": kamar_mandi,
+            "Garages": garasi,
+            "Building/Land Ratio": f"{luas_bangunan/luas_tanah:.2f}",
         }
-        st.table(pd.DataFrame(detail.items(), columns=["Fitur", "Nilai"]))
+        st.table(pd.DataFrame(detail.items(), columns=["Feature", "Value"]))
 
 # ─── TAB: ANALISIS HARGA PER KOTA ─────────────────────────────────────────────
 st.markdown("---")
-st.markdown('<p class="section-header">🗺️ Eksplorasi: Simulasi Harga per Kota</p>', unsafe_allow_html=True)
-st.caption("Bandingkan estimasi harga untuk berbagai kota dengan spesifikasi yang sama.")
+st.markdown('<p class="section-header">🗺️ Exploration: Price Simulation per City</p>', unsafe_allow_html=True)
+st.caption("Compare estimated prices across different cities with the exact same specifications.")
 
 sim_col1, sim_col2, sim_col3 = st.columns(3)
 with sim_col1:
-    sim_lt = st.number_input("Luas Tanah (m²)", value=120, step=10, key="sim_lt")
+    sim_lt = st.number_input("Land Area (sqm)", value=120, step=10, key="sim_lt")
 with sim_col2:
-    sim_lb = st.number_input("Luas Bangunan (m²)", value=90, step=10, key="sim_lb")
+    sim_lb = st.number_input("Building Area (sqm)", value=90, step=10, key="sim_lb")
 with sim_col3:
-    sim_kt = st.slider("Kamar Tidur", 1, 10, 3, key="sim_kt")
+    sim_kt = st.slider("Bedrooms", 1, 10, 3, key="sim_kt")
 
-if st.button("📊 Bandingkan Semua Kota", use_container_width=False):
-    with st.spinner("Menghitung untuk semua kota..."):
+if st.button("📊 Compare All Cities", use_container_width=False):
+    with st.spinner("Calculating for all cities..."):
         sim_results = []
         for k in kota_list:
             try:
                 p = predict_price(k, sim_lt, sim_lb, sim_kt, 2, 1)
-                sim_results.append({"Kota": k, "Estimasi Harga (Juta)": round(p / 1e6, 1)})
+                sim_results.append({"City": k, "Estimated Price (Millions)": round(p / 1e6, 1)})
             except Exception:
                 pass
 
-        df_sim = pd.DataFrame(sim_results).sort_values("Estimasi Harga (Juta)", ascending=False)
+        df_sim = pd.DataFrame(sim_results).sort_values("Estimated Price (Millions)", ascending=False)
 
     fig_bar = px.bar(
         df_sim.head(20),
-        x="Estimasi Harga (Juta)",
-        y="Kota",
+        x="Estimated Price (Millions)",
+        y="City",
         orientation="h",
-        color="Estimasi Harga (Juta)",
+        color="Estimated Price (Millions)",
         color_continuous_scale="Blues",
-        title=f"Top 20 Kota · LT={sim_lt}m² · LB={sim_lb}m² · {sim_kt} KT",
-        labels={"Estimasi Harga (Juta)": "Harga Estimasi (Juta Rp)"},
+        title=f"Top 20 Cities · Land={sim_lt}sqm · Building={sim_lb}sqm · {sim_kt} BR",
+        labels={"Estimated Price (Millions)": "Estimated Price (Million Rp)"},
     )
     fig_bar.update_layout(
         yaxis=dict(autorange="reversed"),
@@ -333,7 +333,7 @@ if st.button("📊 Bandingkan Semua Kota", use_container_width=False):
     st.plotly_chart(fig_bar, use_container_width=True)
 
     st.dataframe(
-        df_sim.style.background_gradient(subset=["Estimasi Harga (Juta)"], cmap="Blues"),
+        df_sim.style.background_gradient(subset=["Estimated Price (Millions)"], cmap="Blues"),
         use_container_width=True,
         hide_index=True,
     )
