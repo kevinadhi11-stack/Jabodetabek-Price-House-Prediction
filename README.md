@@ -84,3 +84,9 @@ This tool can help property agents or prospective buyers get a fair price estima
 
 **Kevinz Adhi Anggoro**
 Data Science Bootcamp Graduate Batch 56 — Digital Skola
+
+## 📬Contact Me 
+If you have any questions, development suggestions, or collaboration opportunities, please feel free to contact me via:
+
+**LinkedIn:** [Kevinz Adhi Anggoro](https://linkedin.com/in/Kevinzadhi)
+**Email:** kevinadhi11@gmail.com
