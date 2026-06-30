@@ -72,7 +72,13 @@ This tool can help property agents or prospective buyers get a fair price estima
 
 ## 📸 Demo
 
-*(Add an app screenshot and the live Streamlit Cloud demo link here after deployment)*
+[🔗 Akses Live Demo Aplikasi di Sini](https://kevinz-house-price-jabodetabek.streamlit.app/)
+
+### Main Dashboard View
+![Main Dashboard](Screenshot 2026-07-01 020859.png)
+
+### Exploration Simulation per City
+![Price Simulation](Screenshot 2026-07-01 020924.png)
 
 ## 👤 Author
 
