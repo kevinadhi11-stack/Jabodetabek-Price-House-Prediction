@@ -75,10 +75,10 @@ This tool can help property agents or prospective buyers get a fair price estima
 [🔗 Access Live Demo Application Here](https://kevinz-house-price-jabodetabek.streamlit.app/)
 
 ### Main Dashboard View
-![Main Dashboard](Screenshot%2026-07-01%031722.png)
+![Main Dashboard](dashboard_preview.png)
 
 ### Exploration Simulation per City
-![Price Simulation](Screenshot%2026-07-01%031739.png)
+![Price Simulation](simulation_preview.png)
 
 ## 👤 Author
 
