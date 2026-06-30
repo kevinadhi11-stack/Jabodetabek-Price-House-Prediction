@@ -72,7 +72,7 @@ This tool can help property agents or prospective buyers get a fair price estima
 
 ## 📸 Demo
 
-[🔗 Akses Live Demo Aplikasi di Sini](https://kevinz-house-price-jabodetabek.streamlit.app/)
+[🔗 Access Live Demo Application Here](https://kevinz-house-price-jabodetabek.streamlit.app/)
 
 ### Main Dashboard View
 ![Main Dashboard](Screenshot 2026-07-01 020859.png)
